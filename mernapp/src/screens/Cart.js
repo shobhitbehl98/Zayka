@@ -2,6 +2,8 @@ import React from 'react'
 import Delete from '@mui/icons-material/Delete'
 import { useCart, useDispatchCart } from '../components/ContextReducer';
 import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 export default function Cart() {
   let data = useCart();
   let dispatch = useDispatchCart();
@@ -42,7 +44,7 @@ export default function Cart() {
   let totalPrice = data.reduce((total, food) => total + food.price, 0)
   return (
     <div>
-<Link className='btn bg-danger fs-4' style={{ marginLeft: "90%", marginTop: "10px"}} to="/"  > X </Link>
+      <Navbar></Navbar>
       <div className='container m-auto mt-5 table-responsive  table-responsive-sm table-responsive-md' >
         <table className='table table-hover'>
           <thead className=' text-white fs-4'>
@@ -84,7 +86,7 @@ export default function Cart() {
        
       </div>
 
-
+              <Footer></Footer>
 
     </div>
   )
