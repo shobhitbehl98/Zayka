@@ -33,7 +33,6 @@ export default function Card(props) {
                     <img className="card-img-top"  src={props.foodItem.img} height={"240px"} width={"180px"} style={{objectFit:'fill'}} alt="Card image cap" ></img>
                     <div className="card-body d-flex flex-column">
                         <h5 className="card-title">{props.foodItem.name}</h5>
-                        {console.log(props,"veg")}
                         <h6>{props.foodItem.Veg===true?"Veg":"Non-Veg"}</h6>
                         <p className="card-text">{props.foodItem.description}</p>
                         <div className='mt-auto me-auto'>

@@ -18,7 +18,23 @@ code {
 #carousal{
   max-height: 500px;
 }
-
+#category{
+  display: flex;
+}
+.arrow{
+  cursor: pointer;
+}
+.down{
+  transform: rotate(180deg); 
+}
+@keyframes rotateAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
 #navbar{
   background-color: rgb(121, 54, 54);
 }

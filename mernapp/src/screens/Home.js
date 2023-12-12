@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Card from '../components/Card'
@@ -10,7 +10,9 @@ export default function Home() {
     const [Search, setSearch] = useState('')
     const [isVeg, setIsVeg] = useState(false);
     const [isNVeg, setIsNVeg] = useState(false);
-
+    const [isUp,setIsUp]=useState(false);
+    let [expand, setExpand] = useState(new Set());
+    
     const loadData = async () => {
         let response = await fetch("http://localhost:5000/api/foodData", {
             method: "POST",
@@ -22,7 +24,19 @@ export default function Home() {
         response = await response.json({});
         setFood(response[0])
         setFoodCat(response[1])
+        setExpand(new Set(response[1].map((x)=>x.CategoryName)))
     }
+
+    let expandArr = useCallback((param)=>{
+        if(isUp){
+            setExpand((prev)=>new Set([...prev,param]));
+            setIsUp(false);
+        }else{
+            expand.delete(param);
+            setExpand(new Set([...expand]));
+            setIsUp(true);
+        }
+    },[expand,isUp])
 
     useEffect(() => {
         loadData()
@@ -80,9 +94,13 @@ export default function Home() {
                 {
                     FoodCat !== [] ? FoodCat.sort((a,b)=>a._id.localeCompare(b._id)).map((data) => {
                         return (<div className='row mb-3'>
+                            <div id='category'>
                             <div key={data._id} className='fs-3 m-3'>{data.CategoryName}</div>
+                            <div className={`${!isUp ? 'down' : ''} fs-3 m-3 arrow`} onClick={()=>expandArr(data.CategoryName)} >^</div>
+                            {/* <div className='fs-3 m-3 arrow'  onClick={()=>expandArr(data.CategoryName)}>&#x25B2;</div> */}
+                            </div>
                             <hr />
-                            {Food !== [] ? Food.filter((item) => item.CategoryName === data.CategoryName && (item.name.toLocaleLowerCase().includes(Search.toLocaleLowerCase())) && ((isVeg && isNVeg) || ( (!isVeg || item.Veg) && (!isNVeg || !item.Veg) )))
+                            {Food !== [] ? Food.filter((item) => expand.has(item.CategoryName) && item.CategoryName === data.CategoryName && (item.name.toLocaleLowerCase().includes(Search.toLocaleLowerCase())) && ((isVeg && isNVeg) || ( (!isVeg || item.Veg) && (!isNVeg || !item.Veg) )))
                                 .map(filterItems => {
                                     return (<div key={filterItems._id} className='col-12 col-md-6 col-lg-4'>
                                         <Card  foodItem={filterItems} options={filterItems.options[0]} 
