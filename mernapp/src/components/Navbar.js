@@ -16,7 +16,7 @@ export default function Navbar() {
   }
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-dark" id='navbar'>
+      <nav className="navbar navbar-expand-lg navbar-dark fixed-top" id='navbar'>
         <div className='container-fluid'>
     <Link className="navbar-brand fs-1 fst-italic fw-bold mb-2 mx-2" to="/" >
     {process.env.REACT_APP_TITLE}
