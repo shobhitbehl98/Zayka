@@ -32,7 +32,6 @@ export default function Cart() {
       let userEmail = localStorage.getItem("userEmail");
       let response = await fetch(`${process.env.REACT_APP_BACKEND}/api/Payment`, {
         method: 'POST',
-        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -51,7 +50,6 @@ export default function Cart() {
           // Make a request to your server to update the payment status
           fetch(`${process.env.REACT_APP_BACKEND}/api/payment-response`, {
             method: 'POST',
-            credentials: 'include',
             headers: {
               'Content-Type': 'application/json',
             },

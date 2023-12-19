@@ -10,7 +10,6 @@ export default function Signup() {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND}/api/createuser`,{
                 method:'POST',
-                credentials: 'include',
                 headers:{
                     'Content-Type':'application/json'
                 },

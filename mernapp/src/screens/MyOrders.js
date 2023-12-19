@@ -11,7 +11,6 @@ export default function MyOrders() {
             let email = localStorage.getItem('userEmail')
             let response = await fetch(`${process.env.REACT_APP_BACKEND}/api/getmyorders`, {
                 method: 'POST',
-                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json'
                 },
