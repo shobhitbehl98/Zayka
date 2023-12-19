@@ -12,7 +12,7 @@ export default function Home() {
     const [isNVeg, setIsNVeg] = useState(false);
     const [isUp,setIsUp]=useState(false);
     let [expand, setExpand] = useState(new Set());
-    console.log(process.env.REACT_APP_BACKEND);
+    console.log(process.env.REACT_APP_BACKEND,`${process.env.REACT_APP_BACKEND}/api/foodData`);
     const loadData = async () => {
         let response = await fetch(`${process.env.REACT_APP_BACKEND}/api/foodData`, {
             method: "POST",
