@@ -19,7 +19,7 @@ export default function Navbar() {
       <nav className="navbar navbar-expand-lg navbar-dark" id='navbar'>
         <div className='container-fluid'>
     <Link className="navbar-brand fs-1 fst-italic fw-bold mb-2 mx-2" to="/" >
-    Zayka
+    {process.env.REACT_APP_TITLE}
     </Link>
     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>

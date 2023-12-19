@@ -9,7 +9,7 @@ export default function MyOrders() {
     let details = async() => {
         try {
             let email = localStorage.getItem('userEmail')
-            let response = await fetch("http://localhost:5000/api/getmyorders", {
+            let response = await fetch(`${process.env.REACT_APP_BACKEND}/api/getmyorders`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ export default function MyOrders() {
                             item.details.map((d,i)=>(
                                 <tr>
                             {i==0?<td className='fw-bold fs-5'>{index+1})</td>:i!=d.length?<td></td>:<td></td>}
-                            {i==0?<td>{moment(item.date).format('DD-MM-YYYY')}</td>:<td></td>}
+                            {i==0?<td>{moment(item.date).format('DD-MM-YYYY HH:mm:ss')}</td>:<td></td>}
                             <td>
                                 Name: {d.name}
                                 <br></br>

@@ -10,7 +10,7 @@ export default function Cart() {
   const [order, setOrder] = useState(null);
   const [config, setConfig] = useState(null);
   useEffect(() => {
-    fetch('http://localhost:5000/config')
+    fetch(`${process.env.REACT_APP_BACKEND}/config`)
       .then((response) => response.json())
       .then((data) => setConfig(data))
       .catch((error) => console.error(error));
@@ -34,7 +34,7 @@ export default function Cart() {
 
     try {
       let userEmail = localStorage.getItem("userEmail");
-      let response = await fetch("http://localhost:5000/api/Payment", {
+      let response = await fetch(`${process.env.REACT_APP_BACKEND}/api/Payment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ export default function Cart() {
         handler: function (response) {
           // Handle the payment success response
           // Make a request to your server to update the payment status
-          fetch('http://localhost:5000/api/payment-response', {
+          fetch(`${process.env.REACT_APP_BACKEND}/api/payment-response`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ export default function Cart() {
               response: response,
               order_data: data,
               email: userEmail,
-              order_date: new Date().toDateString(),
+              order_date: new Date().getTime(),
               total_price: totalPrice
             }),
           })
