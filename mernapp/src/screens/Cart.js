@@ -84,7 +84,7 @@ export default function Cart() {
   return (
     <div>
       <Navbar></Navbar>
-      <div className='container m-auto mt-5 table-responsive  table-responsive-sm table-responsive-md' >
+      <div className='container m-auto mt-5 pt-5 table-responsive  table-responsive-sm table-responsive-md' >
         <table className='table table-hover'>
           <thead className=' text-white fs-4'>
             <tr>
