@@ -18,7 +18,7 @@ export default function Cart() {
   if (data.length === 0) {
     return (
       <div>
-        <Link className='btn bg-danger fs-4' style={{ marginLeft: "90%", marginTop: "10px" }} to="/" > X </Link>
+        <Link className='btn btn-close fs-3' style={{ marginLeft: "90%", marginTop: "2rem" }} to="/" ></Link>
         <div className=' w-100 text-center fs-3'>The Cart is Empty!</div>
       </div>
     )
