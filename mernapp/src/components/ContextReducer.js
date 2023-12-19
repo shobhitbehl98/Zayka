@@ -8,9 +8,7 @@ const reducer = (state,action)=>{
             return [...state,{id:action.id,name:action.name,img:action.img,qty:action.qty,size:action.size,price:action.price}]
         case "REMOVE":
             let newArr = [...state]
-            console.log(action.index,"newArr")
             newArr.splice(action.index, 1)
-            console.log(newArr,"updated newArr")
             return newArr;
         case "DROP":
             let empArray = []

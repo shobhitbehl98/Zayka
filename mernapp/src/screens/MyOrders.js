@@ -16,7 +16,6 @@ export default function MyOrders() {
                 },
                 body:JSON.stringify({email:email})
             })
-            console.log(response);
             let x = await response.json();
             await getorders(x.data);
         } catch (error) {
@@ -39,12 +38,12 @@ export default function MyOrders() {
                         <td>#</td>
                         <td>Date</td>
                         <td>Order</td>
+                        <td>Total Amount</td>
                     </tr>
 
 
                 </thead>
                 <tbody>
-                    {console.log(orders,"orders")}
                     
                     {
                         orders.map((item,index)=>(
@@ -61,6 +60,7 @@ export default function MyOrders() {
                                 <br></br>
                                 Price: ₹{d.price}
                             </td>
+                            {i==0?<td>₹{item.totalPrice!=null?item.totalPrice:0}</td>:<td></td>}
                             </tr>
                         )
                         )))}

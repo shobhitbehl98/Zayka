@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Delete from '@mui/icons-material/Delete'
 import { useCart, useDispatchCart } from '../components/ContextReducer';
 import { Link } from 'react-router-dom';
@@ -7,6 +7,18 @@ import Footer from '../components/Footer'
 export default function Cart() {
   let data = useCart();
   let dispatch = useDispatchCart();
+  const [order, setOrder] = useState(null);
+  const [config, setConfig] = useState(null);
+  useEffect(() => {
+    fetch('http://localhost:5000/config')
+      .then((response) => response.json())
+      .then((data) => setConfig(data))
+      .catch((error) => console.error(error));
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    document.body.appendChild(script);
+  }, [])
   if (data.length === 0) {
     return (
       <div>
@@ -15,29 +27,60 @@ export default function Cart() {
       </div>
     )
   }
-  const handleClearCart = ()=>{
-    dispatch({type:"DROP"})
+  const handleClearCart = () => {
+    dispatch({ type: "DROP" })
   }
-  const handleCheckOut = async () => {
-    let userEmail = localStorage.getItem("userEmail");
-    // console.log(data,localStorage.getItem("userEmail"),new Date())
-    let response = await fetch("http://localhost:5000/api/orderData", {
-      // credentials: 'include',
-      // Origin:"http://localhost:3000/login",
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        order_data: data,
-        email: userEmail,
-        order_date: new Date().toDateString()
-      })
-    });
-    console.log(response);
-    console.log("JSON RESPONSE:::::", response.status)
-    if (response.status === 200) {
-      dispatch({ type: "DROP" })
+  const handlePayment = async () => {
+
+    try {
+      let userEmail = localStorage.getItem("userEmail");
+      let response = await fetch("http://localhost:5000/api/Payment", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          total_price: totalPrice
+        })
+      });
+      console.log('payment-res',response);
+      const options = {
+        key: 'rzp_test_qmlqkzH0IhOcvY',
+        amount: totalPrice * 100,
+        currency: 'INR',
+        order_id: data.id,
+        handler: function (response) {
+          // Handle the payment success response
+          // Make a request to your server to update the payment status
+          fetch('http://localhost:5000/api/payment-response', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              response: response,
+              order_data: data,
+              email: userEmail,
+              order_date: new Date().toDateString(),
+              total_price: totalPrice
+            }),
+          })
+            .then((backendResponse) => {
+              console.log(backendResponse);
+              if(backendResponse.status==200){
+                 dispatch({ type: "DROP" });
+              }
+              backendResponse.json()
+            })
+            .catch((error) => {
+              console.error('Error updating payment status:', error);
+            });
+        },
+      };
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (e) {
+      console.log(e);
     }
   }
 
@@ -66,27 +109,28 @@ export default function Cart() {
                 <td>{food.size.charAt(0).toUpperCase() + food.size.slice(1)}</td>
                 <td>{food.price}</td>
                 <td ><button type="button" className="btn p-0">
-                    <Delete onClick={() => { dispatch({ type: "REMOVE", index: index }) }} />
-                    </button> </td></tr>
+                  <Delete onClick={() => { dispatch({ type: "REMOVE", index: index }) }} />
+                </button> </td></tr>
             ))}
           </tbody>
         </table>
         <div className='mt-5'>
-            <h1 className='fs-5'>Sub Total : ₹{totalPrice}</h1>
-            <h1 className='fs-5'>CGST(2.5%) : ₹{totalPrice*0.025}</h1>
-            <h1 className='fs-5'>SGST(2.5%) : ₹{totalPrice*0.025}</h1>
-            <h1 className='fs-5'>Delivery Charges : ₹35</h1>
-            <hr></hr>
-            <h1 className='fs-2' id="GrossAmount">Gross Amount : ₹{totalPrice+totalPrice*0.05+35}</h1>
-            </div>
+          <h1 className='fs-5'>Sub Total : ₹{totalPrice}</h1>
+          <h1 className='fs-5'>CGST(2.5%) : ₹{totalPrice * 0.025}</h1>
+          <h1 className='fs-5'>SGST(2.5%) : ₹{totalPrice * 0.025}</h1>
+          <h1 className='fs-5'>Delivery Charges : ₹35</h1>
+          <hr></hr>
+          {/* {totalPrice += (totalPrice * 0.05 + 35)} */}
+          <h1 className='fs-2' id="GrossAmount">Gross Amount : ₹ {totalPrice += (totalPrice * 0.05 + 35)}</h1>
+        </div>
         <div>
-          <button className='btn bg-info mt-5 ' onClick={handleCheckOut} > Check Out </button>
+          <button className='btn bg-info mt-5 ' onClick={handlePayment} > Check Out </button>
           <button className='btn bg-info mt-5 mx-3 ' onClick={handleClearCart} > Clear Cart </button>
         </div>
-       
+
       </div>
 
-              <Footer></Footer>
+      <Footer></Footer>
 
     </div>
   )
