@@ -10,11 +10,7 @@ mongodb();
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
-app.use(cors({
-  origin:[process.env.FRONTEND],
-  methods:['POST','GET'],
-  credentials:true
-}))
+app.use(cors())
 app.use(bodyParser.json());
 app.use(express.json())
 app.use((req,res,next)=>{
