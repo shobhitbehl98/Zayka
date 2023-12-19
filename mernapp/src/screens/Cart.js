@@ -10,10 +10,6 @@ export default function Cart() {
   const [order, setOrder] = useState(null);
   const [config, setConfig] = useState(null);
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND}/config`)
-      .then((response) => response.json())
-      .then((data) => setConfig(data))
-      .catch((error) => console.error(error));
     const script = document.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
     script.async = true;
@@ -36,6 +32,7 @@ export default function Cart() {
       let userEmail = localStorage.getItem("userEmail");
       let response = await fetch(`${process.env.REACT_APP_BACKEND}/api/Payment`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -54,6 +51,7 @@ export default function Cart() {
           // Make a request to your server to update the payment status
           fetch(`${process.env.REACT_APP_BACKEND}/api/payment-response`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
               'Content-Type': 'application/json',
             },

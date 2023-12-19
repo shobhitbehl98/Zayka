@@ -14,7 +14,6 @@ import { CartProvider } from './components/ContextReducer';
 import Cart from './screens/Cart';
 import MyOrders from './screens/MyOrders';
 function App() {
-  console.log(process.env);
   return (
     <CartProvider>
 
