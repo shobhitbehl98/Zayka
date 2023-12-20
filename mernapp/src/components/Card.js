@@ -29,8 +29,8 @@ export default function Card(props) {
     return (
         <div>
             <div>
-                <div className="card mt-3" style={{ "width": "360px", "height": "520px" }}>
-                    <img className="card-img-top"  src={props.foodItem.img} height={"240px"} width={"180px"} style={{objectFit:'fill'}} alt="Card image cap" ></img>
+                <div className="card mt-3" style={{ "width": "360px", "height": "520px","borderRadius":'1.5rem' }}>
+                    <img className="card-img-top"  src={props.foodItem.img} height={"240px"} width={"180px"} style={{objectFit:'fill',borderRadius:'1rem'}} alt="Card image cap" ></img>
                     <div className="card-body d-flex flex-column">
                         <h5 className="card-title">{props.foodItem.name}</h5>
                         <h6>{props.foodItem.Veg===true?"Veg":"Non-Veg"}</h6>
