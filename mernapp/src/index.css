@@ -39,7 +39,9 @@ code {
   background-color: rgb(121, 54, 54);
 }
 #navbar-example2{
-  background-color: rgb(121, 54, 54);
+  display: flex;
+  justify-content: space-around;
+  background-color : rgb(100, 37, 37);
 }
 
  #toggle{
@@ -49,7 +51,7 @@ code {
 }
 
 .nav-link{
-  color: rgb(255, 255, 255,0.55)!important;
+  color: rgb(255, 255, 255,0.65)!important;
 }
 .nav-link:hover{
   color: rgb(255, 255, 255)!important;
