@@ -16,7 +16,7 @@ code {
   color: yellow;
 }
 #carousal{
-  max-height: 500px;
+  max-height: 34rem;
 }
 #category{
   display: flex;
@@ -38,9 +38,24 @@ code {
 #navbar{
   background-color: rgb(121, 54, 54);
 }
+#navbar-example2{
+  background-color: rgb(121, 54, 54);
+}
+
  #toggle{
-  margin-top: 40px;
-  margin-bottom: 50px;
+    margin-top: 8rem;
+    margin-bottom: 1.5rem;
+    margin-left: 1rem;
+}
+
+.nav-link{
+  color: rgb(255, 255, 255,0.55)!important;
+}
+.nav-link:hover{
+  color: rgb(255, 255, 255)!important;
+}
+.nav-link:active{
+  color: rgb(255, 255, 255)!important;
 }
 
 #flexSwitchCheckDefault{

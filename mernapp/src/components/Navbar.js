@@ -4,9 +4,10 @@ import Badge from 'react-bootstrap/Badge'
 import { useCart } from './ContextReducer'
 import Modal from '../Modal'
 import Cart from '../screens/Cart'
+import Navbar2 from './Navbar2'
 
 
-export default function Navbar() {
+export default function Navbar(props) {
   const navigate = useNavigate()
   let data=useCart();
   const [cartView,setcartView] = useState(false);
@@ -14,9 +15,10 @@ export default function Navbar() {
     localStorage.removeItem('authToken');
     navigate('/login')
   }
+  
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg navbar-dark fixed-top" id='navbar'>
+    <div style={{position:'fixed',zIndex:10,width:'100%'}}>
+      <nav className="navbar navbar-expand-lg navbar-dark" id='navbar'>
         <div className='container-fluid'>
     <Link className="navbar-brand fs-1 fst-italic fw-bold mb-2 mx-2" to="/" >
     {process.env.REACT_APP_TITLE}
@@ -52,6 +54,7 @@ export default function Navbar() {
     </div>
     </div>
   </nav>
+  <Navbar2 category={props.category}></Navbar2>
   </div>
   )
 }

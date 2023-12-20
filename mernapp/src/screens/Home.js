@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Card from '../components/Card'
 import Carousal from '../components/Carousal'
+import Navbar2 from '../components/Navbar2'
 
 export default function Home() {
     const [Food, setFood] = useState([])
@@ -20,6 +21,7 @@ export default function Home() {
         }
         )
         response = await response.json({});
+        console.log(response)
         setFood(response[0])
         setFoodCat(response[1])
     }
@@ -29,9 +31,9 @@ export default function Home() {
         loadData()
     }, [])
     return (
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div>
-                <Navbar></Navbar>
+                <Navbar category={FoodCat}></Navbar>
             </div>
             <div><div id="carouselExampleFade" className="carousel slide carousel-fade" data-bs-ride="carousel" style={{ objectFit: "contain !!important" }}>
                 <div className="carousel-inner" id='carousal'>
@@ -77,12 +79,12 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className='container'>
+            <div className='container' data-bs-spy="scroll" data-bs-target="#navbar-example2"data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
                 {
                     FoodCat !== [] ? FoodCat.sort((a,b)=>a._id.localeCompare(b._id)).map((data) => {
                         return (<div className='row mb-3'>
                             <div id='category'>
-                            <div key={data._id} className='fs-3 m-3'>{data.CategoryName}</div>
+                            <div key={data._id} id={data.CategoryName} className='fs-3 m-3'>{data.CategoryName}</div>
                             </div>
                             <hr />
                             {Food !== [] ? Food.filter((item) => item.CategoryName === data.CategoryName && (item.name.toLocaleLowerCase().includes(Search.toLocaleLowerCase())) && ((isVeg && isNVeg) || ( (!isVeg || item.Veg) && (!isNVeg || !item.Veg) )))
