@@ -1,25 +1,49 @@
 import React, { useState, useEffect } from 'react'
 import Delete from '@mui/icons-material/Delete'
 import { useCart, useDispatchCart } from '../components/ContextReducer';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import Alert from '../components/Alert'
+
 export default function Cart() {
   let data = useCart();
   let dispatch = useDispatchCart();
+  let navigate = useNavigate();
   const [order, setOrder] = useState(null);
   const [config, setConfig] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
+
+  const handleShowAlert = () => {
+    setShowAlert(true)
+  };
+
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+    navigate('/');
+
+  };
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
     script.async = true;
     document.body.appendChild(script);
   }, [])
+ 
+
   if (data.length === 0) {
     return (
       <div>
         <Link className='btn btn-close fs-3' style={{ marginLeft: "90%", marginTop: "2rem" }} to="/" ></Link>
         <div className=' w-100 text-center fs-3'>The Cart is Empty!</div>
+        <div>
+            {showAlert && (
+        <Alert
+          message="Order Placed Succesfully"
+          onClose={handleCloseAlert}
+        />
+      )}
+        </div>
       </div>
     )
   }
@@ -30,7 +54,7 @@ export default function Cart() {
 
     try {
       let userEmail = localStorage.getItem("userEmail");
-      let response = await fetch(`${process.env.REACT_APP_BACKEND}/api/Payment`, {
+      let res = await fetch(`${process.env.REACT_APP_BACKEND}/api/Payment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -39,7 +63,7 @@ export default function Cart() {
           total_price: totalPrice
         })
       });
-      console.log('payment-res',response);
+      res=await res.json();
       const options = {
         key: 'rzp_test_qmlqkzH0IhOcvY',
         amount: totalPrice * 100,
@@ -61,20 +85,21 @@ export default function Cart() {
               total_price: totalPrice
             }),
           })
-            .then((backendResponse) => {
-              console.log(backendResponse);
-              if(backendResponse.status==200){
-                 dispatch({ type: "DROP" });
-              }
-              backendResponse.json()
+          .then((backendResponse) => {
+            if(backendResponse.status==200){
+              handleShowAlert();
+              dispatch({ type: "DROP" });
+              
+            }
+            backendResponse.json()
             })
             .catch((error) => {
               console.error('Error updating payment status:', error);
             });
-        },
-      };
-      const rzp = new window.Razorpay(options);
-      rzp.open();
+          },
+        };
+        const rzp = new window.Razorpay(options);
+        rzp.open();
     } catch (e) {
       console.log(e);
     }
@@ -84,7 +109,8 @@ export default function Cart() {
   return (
     <div>
       <Navbar></Navbar>
-      <div className='container m-auto mt-5 pt-5 table-responsive  table-responsive-sm table-responsive-md' >
+      
+      <div className='container m-auto mt-1 pt-5 table-responsive  table-responsive-sm table-responsive-md' >
         <table className='table table-hover'>
           <thead className=' text-white fs-4'>
             <tr>

@@ -4,6 +4,7 @@ import Footer from '../components/Footer'
 import Card from '../components/Card'
 import Carousal from '../components/Carousal'
 import Navbar2 from '../components/Navbar2'
+import Alert from '../components/Alert'
 
 export default function Home() {
     const [Food, setFood] = useState([])
@@ -11,7 +12,8 @@ export default function Home() {
     const [Search, setSearch] = useState('')
     const [isVeg, setIsVeg] = useState(false);
     const [isNVeg, setIsNVeg] = useState(false);
-    console.log(process.env.REACT_APP_BACKEND,`${process.env.REACT_APP_BACKEND}/api/foodData`);
+    const [showAlert, setShowAlert] = useState(false);
+   
     const loadData = async () => {
         let response = await fetch(`${process.env.REACT_APP_BACKEND}/api/foodData`, {
             method: "POST",
@@ -21,7 +23,6 @@ export default function Home() {
         }
         )
         response = await response.json({});
-        console.log(response)
         setFood(response[0])
         setFoodCat(response[1])
     }
@@ -32,9 +33,12 @@ export default function Home() {
     }, [])
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div>
+        
+            <div style={{position:'fixed',zIndex:10,width:'100%'}}>
                 <Navbar category={FoodCat}></Navbar>
+                <Navbar2 category={FoodCat}></Navbar2>
             </div>
+            
             <div><div id="carouselExampleFade" className="carousel slide carousel-fade" data-bs-ride="carousel" style={{ objectFit: "contain !!important" }}>
                 <div className="carousel-inner" id='carousal'>
                     <div className='carousel-caption' style={{ zIndex: "8" }}>

@@ -4,7 +4,7 @@ import { Link } from 'react-scroll'
 
 function Navbar2(props) {
   return (
-    <div id='navbar-example2' style={{}}>
+    <div id='navbar-example2' >
 
  { props.category.map((element,index) => {
    return(

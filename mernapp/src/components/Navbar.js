@@ -2,9 +2,6 @@ import React,{useState} from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import Badge from 'react-bootstrap/Badge'
 import { useCart } from './ContextReducer'
-import Modal from '../Modal'
-import Cart from '../screens/Cart'
-import Navbar2 from './Navbar2'
 
 
 export default function Navbar(props) {
@@ -17,7 +14,7 @@ export default function Navbar(props) {
   }
   
   return (
-    <div style={{position:'fixed',zIndex:10,width:'100%'}}>
+    <div >
       <nav className="navbar navbar-expand-lg navbar-dark" id='navbar'>
         <div className='container-fluid'>
     <Link className="navbar-brand fs-1 fst-italic fw-bold mb-2 mx-2" to="/" >
@@ -54,7 +51,7 @@ export default function Navbar(props) {
     </div>
     </div>
   </nav>
-  <Navbar2 category={props.category}></Navbar2>
+  {/* <Navbar2 category={props.category}></Navbar2> */}
   </div>
   )
 }
