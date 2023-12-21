@@ -85,7 +85,7 @@ export default function Home() {
 
             <div className='container' data-bs-spy="scroll" data-bs-target="#navbar-example2"data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
                 {
-                    FoodCat !== [] ? FoodCat.sort((a,b)=>a._id.localeCompare(b._id)).map((data) => {
+                    FoodCat && FoodCat.length>0 ? FoodCat.sort((a,b)=>a._id.localeCompare(b._id)).map((data) => {
                         return (<div className='row mb-3'>
                             <div id='category'>
                             <div key={data._id} id={data.CategoryName} className='fs-3 m-3'>{data.CategoryName}</div>
