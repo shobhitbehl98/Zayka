@@ -7,9 +7,11 @@ const jwt = require('jsonwebtoken');
 const jwtSecret='ilasfsgamskadqknakosnaklsnaklnko'
 router.post("/createUser", [
     body('email').isEmail(),
-    body('name').isLength({ min: 5 }).isAlpha(),
+    body('name').isLength({ min: 1 }).isAlpha(),
+    body('lastName').isAlpha(),
     body('password').isLength({ min: 5 })]
     , async (req, res) => {
+        console.log(res.body)
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
@@ -19,6 +21,7 @@ router.post("/createUser", [
         try {
             await User.create({
                 name: req.body.name,
+                lastName: req.body.lastName,
                 location: req.body.location,
                 email: req.body.email,
                 password: secPass
@@ -54,7 +57,7 @@ router.post("/login", [
                 }
             }
             const authToken=jwt.sign(data,jwtSecret);
-            res.json({ success: true,authToken:authToken });
+            res.json({ success: true,authToken:authToken,location:userData.location });
         } catch (error) {
             console.log(error);
             res.json({ success: false });

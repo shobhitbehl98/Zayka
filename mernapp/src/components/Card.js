@@ -1,10 +1,21 @@
 import React, { useState } from 'react'
 import { useCart,useDispatchCart } from './ContextReducer';
+import Alert from './Alert';
 
 
 export default function Card(props) {
     const [qty,setQty] = useState(1)
     const [cat,setCat] = useState(0)
+    const [showAlert, setShowAlert] = useState(false);
+
+  const handleShowAlert = () => {
+    setShowAlert(true)
+  };
+
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+
+  };
     let options=props.options;
     let optionkey=Object.keys(options)
     let optionvalue=Object.values(options)
@@ -12,6 +23,10 @@ export default function Card(props) {
     let data = useCart()
     const handleAddToCart = async()=>{
         let food = [];
+        if(!localStorage.getItem('authToken')){
+            handleShowAlert()
+            return;
+        }
         for(let item of data){
             if(item.id===props.foodItem._id){
                 food=item;
@@ -29,6 +44,14 @@ export default function Card(props) {
     return (
         <div>
             <div>
+            <div>
+            {showAlert && (
+        <Alert
+          message="Please Login/Signup"
+          onClose={handleCloseAlert}
+        />
+      )}
+        </div>
                 <div className="card mt-3" style={{ "width": "360px", "height": "520px","borderRadius":'1.5rem' }}>
                     <img className="card-img-top"  src={props.foodItem.img} height={"240px"} width={"180px"} style={{objectFit:'fill',borderRadius:'1rem'}} alt="Card image cap" ></img>
                     <div className="card-body d-flex flex-column">

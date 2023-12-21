@@ -16,13 +16,14 @@ export default function Login() {
                 },
                 body:JSON.stringify({email:credentials.email,password:credentials.password}),
             })
-            const json=await response.json();
+            const json=await response.json({});
             if(!json.success){
                 alert("Enter Valid Credentials");
             }
             if(json.success){
                localStorage.setItem("userEmail",credentials.email);
                localStorage.setItem("authToken",json.authToken);
+               localStorage.setItem("location",json.location);
                navigate("/")
             }
         } catch (error) {

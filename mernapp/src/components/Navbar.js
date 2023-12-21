@@ -9,7 +9,11 @@ export default function Navbar(props) {
   let data=useCart();
   const [cartView,setcartView] = useState(false);
   const handleLogout = ()=>{
+    localStorage.removeItem('location');
     localStorage.removeItem('authToken');
+    localStorage.removeItem('getOrders');
+    localStorage.removeItem('foodData');
+    localStorage.removeItem('name');
     navigate('/login')
   }
   
@@ -33,15 +37,26 @@ export default function Navbar(props) {
         <Link className='nav-link' aria-current="page" to="/myorders">My Orders</Link>
       </li>  
       :""}
+        {(localStorage.getItem('location')) ?
+      <li className='nav-item' style={{display:'flex'}}>
+        <img style={{transform:'scale(0.6)'}} src='location.svg' />
+        <div style={{display:'flex',color:'yellow',width:'25rem',alignItems:'center'}} aria-current="page">{localStorage.getItem('location')}</div>
+      </li>  
+      :""}
+
       </ul>
       {(localStorage.getItem('authToken'))?
       <div className='d-flex'>
-      <Link className="btn text-white fs-5" to="/cart" >My Cart
+      <Link className="btn navbar-btn text-white fs-5" to="/cart" >My Cart
       {" "}
-      <Badge pill bg='danger'>{data?.length}</Badge>
+      <Badge pill bg='danger'style={{marginLeft:'0.25rem'}}>{data?.length}</Badge>
       </Link>
       {/* {cartView?<Modal onClose={()=>setcartView(false)}><Cart></Cart></Modal>:null} */}
-      <div className="btn text-white fs-5" onClick={handleLogout}>Logout</div>
+      <div className="btn navbar-btn text-white fs-5 me-3" onClick={handleLogout}>Logout</div>
+      <div style={{display:'flex',flexDirection:'column',marginRight:'1rem',alignItems:'center',justifyContent:'center'}}>
+        <img src='profilepic.png'style={{width:'2.5rem',height:'2.5rem'}}/>
+        <div style={{color:'white'}}>Welcome {localStorage.getItem('name')}</div>
+      </div>
   </div>
       :
       <div className='d-flex'>
@@ -51,7 +66,6 @@ export default function Navbar(props) {
     </div>
     </div>
   </nav>
-  {/* <Navbar2 category={props.category}></Navbar2> */}
   </div>
   )
 }

@@ -42,8 +42,8 @@ code {
   display: flex;
   justify-content: space-around;
   background-color : rgb(100, 37, 37);
+  z-index: 7;
 }
-
  #toggle{
     margin-top: 8rem;
     margin-bottom: 1.5rem;
@@ -70,6 +70,10 @@ code {
 }
 #navbarNav{
   margin-left: 10px;
+}
+.navbar-btn{
+  align-items: center !important;
+    display: flex !important
 }
 /* tr:nth-child(even) {background-color: #9a1c1c;} */
 /* tr:nth-child(odd) {background-color: #400c0c;} */

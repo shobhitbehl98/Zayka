@@ -16,14 +16,24 @@ export default function Home() {
    
     const loadData = async () => {
         try{
-        let response = await fetch(`${process.env.REACT_APP_BACKEND}/api/foodData`, {
-            method: "POST",
-            headers: {
-                'Content-type': 'application/json'
+            console.log(localStorage);
+            if(!localStorage.getItem('foodData')){
+                console.log('inside')
+                let response = await fetch(`${process.env.REACT_APP_BACKEND}/api/foodData`, {
+                    method: "POST",
+                    headers: {
+                        'Content-type': 'application/json'
+                    }
+                }
+                )
+                console.log('before',response);
+                response = await response.json({});
+                localStorage.setItem('foodData',JSON.stringify(response))
+                console.log('after',response);
+                console.log(localStorage);
             }
-        }
-        )
-        response = await response.json({});
+        const response=JSON.parse(localStorage.getItem('foodData'));
+        // console.log(response)
         setFood(response[0])
         setFoodCat(response[1])
     }catch(e){
@@ -39,7 +49,7 @@ export default function Home() {
         <div style={{ display: 'flex', flexDirection: 'column' }}>
         
             <div style={{position:'fixed',zIndex:10,width:'100%'}}>
-                <Navbar category={FoodCat}></Navbar>
+                <Navbar></Navbar>
                 <Navbar2 category={FoodCat}></Navbar2>
             </div>
             
@@ -76,7 +86,7 @@ export default function Home() {
                     <span className="visually-hidden">Next</span>
                 </button>
             </div></div>
-            <div className='container d-flex' id='toggle'>
+            <div className='container d-flex' id='toggle' style={{zIndex:8}}>
                 <div className="form-check form-switch" >
                     <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onChange={(e) => { setIsVeg(e.target.checked) }} />
                     <label className="form-check-label" id="labelswitch" for="flexSwitchCheckDefault">Veg</label>
@@ -103,15 +113,15 @@ export default function Home() {
                                     </div>)
                                 }) : <div>No data found</div>}
                         </div>
-                        )
-                    }) : 
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                    <div style={{fontWeight:'900',fontSize:'8rem'}}>Server Down :(</div>
-                    <div style={{fontWeight:'500',fontSize:'2rem'}}>We will be back shortly, thank you for your patience</div>
                     
+                    )
+                }) : 
+                <div style={{ alignItems: 'center'}}>
+                    <div style={{fontWeight:'500',fontSize:'2rem'}}>Server Down: We will be back shortly, thank you for your patience(</div>
                     </div>
                 }
             </div>
+            <div style={{position:'fixed',left:'90vw',top:'70vh',height:'5rem',width:'5rem',display:'flex',fontWeight:'600',alignItems:'center',justifyContent:'center',borderRadius:'6rem',background:'yellow',color:'black'}} onClick={()=>{ window.scrollTo({ top: 0, behavior: 'smooth' });}}>To the top</div>
             <div><Footer></Footer></div>
         </div>
     )
