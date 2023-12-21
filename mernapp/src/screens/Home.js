@@ -15,6 +15,7 @@ export default function Home() {
     const [showAlert, setShowAlert] = useState(false);
    
     const loadData = async () => {
+        try{
         let response = await fetch(`${process.env.REACT_APP_BACKEND}/api/foodData`, {
             method: "POST",
             headers: {
@@ -25,6 +26,9 @@ export default function Home() {
         response = await response.json({});
         setFood(response[0])
         setFoodCat(response[1])
+    }catch(e){
+        console.log(e)
+    }
     }
 
 
@@ -100,7 +104,12 @@ export default function Home() {
                                 }) : <div>No data found</div>}
                         </div>
                         )
-                    }) : <div>""""</div>
+                    }) : 
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                    <div style={{fontWeight:'900',fontSize:'8rem'}}>Server Down :(</div>
+                    <div style={{fontWeight:'500',fontSize:'2rem'}}>We will be back shortly, thank you for your patience</div>
+                    
+                    </div>
                 }
             </div>
             <div><Footer></Footer></div>
