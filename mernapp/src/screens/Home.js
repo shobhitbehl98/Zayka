@@ -16,6 +16,7 @@ export default function Home() {
 
     const loadData = async () => {
         try {
+            console.log(localStorage)
             let response = await fetch(`${process.env.REACT_APP_BACKEND}/api/foodData`, {
                 method: "POST",
                 headers: {
