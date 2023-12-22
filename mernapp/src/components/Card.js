@@ -69,7 +69,7 @@ export default function Card(props) {
                                 }
                             </select>
                             <select className='m-3 h-50 bg-danger' onChange={(e) => setCat(e.target.value)}>
-                                {optionkey.map((str)=>{return str.charAt(0).toUpperCase() + str.slice(1)}).map((item,i)=>{   
+                                {optionkey?.map((str)=>{return str.charAt(0).toUpperCase() + str.slice(1)}).map((item,i)=>{   
                                     return <option key={item} value={i}>{item}</option>
                                 })}
                             </select>

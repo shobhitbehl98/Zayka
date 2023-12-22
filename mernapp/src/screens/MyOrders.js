@@ -50,8 +50,8 @@ export default function MyOrders() {
                 <tbody>
                     
                     {
-                        orders.map((item,index)=>(
-                            item.details.map((d,i)=>(
+                        orders?.map((item,index)=>(
+                            item.details?.map((d,i)=>(
                                 <tr>
                             {i==0?<td className='fw-bold fs-5'>{index+1})</td>:i!=d.length?<td></td>:<td></td>}
                             {i==0?<td>{moment(item.date).format('DD-MM-YYYY HH:mm:ss')}</td>:<td></td>}

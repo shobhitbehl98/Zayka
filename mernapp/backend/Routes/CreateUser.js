@@ -11,7 +11,6 @@ router.post("/createUser", [
     body('lastName').isAlpha(),
     body('password').isLength({ min: 5 })]
     , async (req, res) => {
-        console.log(res.body)
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });

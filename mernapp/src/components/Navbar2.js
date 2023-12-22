@@ -6,7 +6,7 @@ function Navbar2(props) {
   return (
     <div id='navbar-example2' >
 
- { props.category.map((element,index) => {
+ { props?.category?.map((element,index) => {
    return(
      <div id="navbar-example2" className="navbar navbar-dark bg-body-tertiary px-3">
   <ul className="nav nav-pills">

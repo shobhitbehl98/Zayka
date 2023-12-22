@@ -123,7 +123,7 @@ export default function Cart() {
             </tr>
           </thead>
           <tbody>
-            {data.map((food, index) => (
+            {data?.map((food, index) => (
               <tr>
                 <th scope='row' >{index + 1}</th>
                 <td>{food.name}</td>
