@@ -12,7 +12,6 @@ export default function Navbar(props) {
     localStorage.removeItem('location');
     localStorage.removeItem('authToken');
     localStorage.removeItem('getOrders');
-    localStorage.removeItem('foodData');
     localStorage.removeItem('name');
     navigate('/login')
   }

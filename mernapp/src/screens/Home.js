@@ -13,32 +13,23 @@ export default function Home() {
     const [isVeg, setIsVeg] = useState(false);
     const [isNVeg, setIsNVeg] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
-   
+
     const loadData = async () => {
-        try{
-            console.log(localStorage);
-            if(!localStorage.getItem('foodData')){
-                console.log('inside')
-                let response = await fetch(`${process.env.REACT_APP_BACKEND}/api/foodData`, {
-                    method: "POST",
-                    headers: {
-                        'Content-type': 'application/json'
-                    }
+        try {
+            let response = await fetch(`${process.env.REACT_APP_BACKEND}/api/foodData`, {
+                method: "POST",
+                headers: {
+                    'Content-type': 'application/json'
                 }
-                )
-                console.log('before',response);
-                response = await response.json({});
-                localStorage.setItem('foodData',JSON.stringify(response))
-                console.log('after',response);
-                console.log(localStorage);
             }
-        const response=JSON.parse(localStorage.getItem('foodData'));
-        // console.log(response)
-        setFood(response[0])
-        setFoodCat(response[1])
-    }catch(e){
-        console.log(e)
-    }
+            )
+            console.log('before', response);
+            response = await response.json({});
+            setFood(response[0])
+            setFoodCat(response[1])
+        } catch (e) {
+            console.log(e)
+        }
     }
 
 
@@ -47,12 +38,12 @@ export default function Home() {
     }, [])
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-        
-            <div style={{position:'fixed',zIndex:10,width:'100%'}}>
+
+            <div style={{ position: 'fixed', zIndex: 10, width: '100%' }}>
                 <Navbar></Navbar>
                 <Navbar2 category={FoodCat}></Navbar2>
             </div>
-            
+
             <div><div id="carouselExampleFade" className="carousel slide carousel-fade" data-bs-ride="carousel" style={{ objectFit: "contain !!important" }}>
                 <div className="carousel-inner" id='carousal'>
                     <div className='carousel-caption' style={{ zIndex: "8" }}>
@@ -86,7 +77,7 @@ export default function Home() {
                     <span className="visually-hidden">Next</span>
                 </button>
             </div></div>
-            <div className='container d-flex' id='toggle' style={{zIndex:8}}>
+            <div className='container d-flex' id='toggle' style={{ zIndex: 8 }}>
                 <div className="form-check form-switch" >
                     <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onChange={(e) => { setIsVeg(e.target.checked) }} />
                     <label className="form-check-label" id="labelswitch" for="flexSwitchCheckDefault">Veg</label>
@@ -97,31 +88,31 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className='container' data-bs-spy="scroll" data-bs-target="#navbar-example2"data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+            <div className='container' data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
                 {
-                    FoodCat && FoodCat.length>0 ? FoodCat?.sort((a,b)=>a._id.localeCompare(b._id)).map((data) => {
+                    FoodCat && FoodCat.length > 0 ? FoodCat?.sort((a, b) => a._id.localeCompare(b._id)).map((data) => {
                         return (<div className='row mb-3'>
                             <div id='category'>
-                            <div key={data._id} id={data.CategoryName} className='fs-3 m-3'>{data.CategoryName}</div>
+                                <div key={data._id} id={data.CategoryName} className='fs-3 m-3'>{data.CategoryName}</div>
                             </div>
                             <hr />
-                            {Food !== [] ? Food.filter((item) => item.CategoryName === data.CategoryName && (item.name.toLocaleLowerCase().includes(Search.toLocaleLowerCase())) && ((isVeg && isNVeg) || ( (!isVeg || item.Veg) && (!isNVeg || !item.Veg) )))
+                            {Food !== [] ? Food.filter((item) => item.CategoryName === data.CategoryName && (item.name.toLocaleLowerCase().includes(Search.toLocaleLowerCase())) && ((isVeg && isNVeg) || ((!isVeg || item.Veg) && (!isNVeg || !item.Veg))))
                                 .map(filterItems => {
                                     return (<div key={filterItems._id} className='col-12 col-md-6 col-lg-4'>
-                                        <Card  foodItem={filterItems} options={filterItems.options[0]} 
-                                            ></Card>
+                                        <Card foodItem={filterItems} options={filterItems.options[0]}
+                                        ></Card>
                                     </div>)
                                 }) : <div>No data found</div>}
                         </div>
-                    
-                    )
-                }) : 
-                <div style={{ alignItems: 'center'}}>
-                    <div style={{fontWeight:'500',fontSize:'2rem'}}>Server Down: We will be back shortly, thank you for your patience(</div>
-                    </div>
+
+                        )
+                    }) :
+                        <div style={{ alignItems: 'center' }}>
+                            <div style={{ fontWeight: '500', fontSize: '2rem' }}>Server Down: We will be back shortly, thank you for your patience(</div>
+                        </div>
                 }
             </div>
-            <div style={{position:'fixed',left:'90vw',top:'70vh',height:'5rem',width:'5rem',display:'flex',fontWeight:'600',alignItems:'center',justifyContent:'center',borderRadius:'6rem',background:'yellow',color:'black'}} onClick={()=>{ window.scrollTo({ top: 0, behavior: 'smooth' });}}>To the top</div>
+            <div style={{ position: 'fixed', left: '90vw', top: '70vh', height: '5rem', width: '5rem', display: 'flex', fontWeight: '600', alignItems: 'center', justifyContent: 'center', borderRadius: '6rem', background: 'yellow', color: 'black' }} onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }}>To the top</div>
             <div><Footer></Footer></div>
         </div>
     )
