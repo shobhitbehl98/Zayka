@@ -9,7 +9,6 @@ export default function MyOrders() {
     let details = async() => {
         try {
             let email = localStorage.getItem('userEmail')
-            if(!localStorage.getItem('getOrders')){
             let response = await fetch(`${process.env.REACT_APP_BACKEND}/api/getmyorders`, {
                 method: 'POST',
                 headers: {
@@ -17,10 +16,7 @@ export default function MyOrders() {
                 },
                 body:JSON.stringify({email:email})
             })
-            let x = await response.json();
-            localStorage.setItem('getOrders',JSON.stringify(x));
-        }
-            const res=JSON.parse(localStorage.getItem('getOrders'));
+            let res = await response.json();
             await getorders(res.data);
         } catch (error) {
             console.log(error,"details")

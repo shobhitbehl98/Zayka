@@ -108,9 +108,7 @@ export default function Home() {
 
                         )
                     }) :
-                        <div style={{ alignItems: 'center' }}>
-                            <div style={{ fontWeight: '500', fontSize: '2rem' }}>Server Down: We will be back shortly, thank you for your patience 😓</div>
-                        </div>
+                        <div></div>
                 }
             </div>
             <div style={{ position: 'fixed', left: '90vw', top: '70vh', height: '5rem', width: '5rem', display: 'flex', fontWeight: '600', alignItems: 'center', justifyContent: 'center', borderRadius: '6rem', background: 'yellow', color: 'black' }} onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }}>To the top</div>

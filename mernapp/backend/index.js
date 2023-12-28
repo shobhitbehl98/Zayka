@@ -1,5 +1,7 @@
 const express = require('express')
 const Razorpay = require('razorpay');
+// const redisClient = require('./redis');
+const cacheMiddleware = require('./cacheMiddleware');
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const cors = require('cors')
@@ -30,9 +32,9 @@ app.use((req,res,next)=>{
   next();
 })
 app.use('/api',require('./Routes/CreateUser'))
-app.use('/api',require('./Routes/FoodData'))
+app.use('/api',cacheMiddleware,require('./Routes/FoodData'))
 app.use('/api',require('./Routes/UpdateFood'))
-app.use('/api',require('./Routes/OrderData'))
+app.use('/api',cacheMiddleware,require('./Routes/OrderData'))
 app.use('/api',require('./Routes/Payment'))
 app.use('/api',require('./Routes/ForgotPassword'))
 app.listen(port, () => {
