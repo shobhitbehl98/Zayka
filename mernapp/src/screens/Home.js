@@ -109,7 +109,7 @@ export default function Home() {
                         )
                     }) :
                         <div style={{ alignItems: 'center' }}>
-                            <div style={{ fontWeight: '500', fontSize: '2rem' }}>Server Down: We will be back shortly, thank you for your patience(</div>
+                            <div style={{ fontWeight: '500', fontSize: '2rem' }}>Server Down: We will be back shortly, thank you for your patience 😓</div>
                         </div>
                 }
             </div>
