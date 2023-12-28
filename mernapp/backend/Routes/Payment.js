@@ -15,8 +15,12 @@ router.post('/payment',async(req,res)=>{
         const order = await razorpay.orders.create(options);
         res.json(order)
       } catch (error) {
+        if(error.statusCode=='429'){
+          res.status(429).send('Too many requests')
+        }else{
         console.error(error);
         res.status(500).send('Internal Server Error');
+        }
       }
 })
 module.exports = router

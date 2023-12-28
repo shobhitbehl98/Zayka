@@ -27,6 +27,9 @@ app.use('/api',require('./Routes/FoodData'))
 app.use('/api',require('./Routes/UpdateFood'))
 app.use('/api',require('./Routes/OrderData'))
 app.use('/api',require('./Routes/Payment'))
+app.use('/api',require('./Routes/ForgotPassword'))
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+module.exports=app;

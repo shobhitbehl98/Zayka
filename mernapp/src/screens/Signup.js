@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
@@ -7,7 +7,17 @@ import { useNavigate } from 'react-router-dom'
 export default function Signup() {
     const [credentials,setcredentials] = useState({name:"",lastName:"",email:"",password:"",location:""})
     const [showAlert, setShowAlert] = useState(false);
+    const [showSignedAlert, setShowSignedAlert] = useState(false);
     const navigate = useNavigate();
+  const handleSignedShowAlert = () => {
+    setShowSignedAlert(true)
+  };
+
+  const handleSignedCloseAlert = () => {
+    setShowSignedAlert(false);
+    navigate('/')
+
+  };
   const handleShowAlert = () => {
     setShowAlert(true)
   };
@@ -41,12 +51,27 @@ export default function Signup() {
         }
 
     }
+    const checksignup = ()=>{
+      if(localStorage.getItem("authToken")){
+       handleSignedShowAlert()
+      }
+    }
     const onChange=(event)=>{
         setcredentials({...credentials,[event.target.name]:event.target.value})
     }
+    useEffect(()=>{
+      checksignup()
+     },[])
   return (
     <div>
         <div><Navbar></Navbar></div>
+        {showSignedAlert && (
+        <Alert
+          message="Already Signed in"
+          time='500'
+          onClose={handleSignedCloseAlert}
+        />
+      )}
         <div>
             {showAlert && (
         <Alert

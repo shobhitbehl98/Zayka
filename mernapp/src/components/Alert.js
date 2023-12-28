@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
 import './Alert.css';
 
-const Alert = ({ message, onClose }) => {
+const Alert = ({ message,time, onClose }) => {
+  console.log(time);
+  if(!time){
+    time=1300
+  }
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
-    }, 1300);
+    }, time);
 
     return () => clearTimeout(timer);
   }, [onClose]);

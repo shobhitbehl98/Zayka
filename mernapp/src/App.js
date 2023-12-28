@@ -13,6 +13,8 @@ import Signup from './screens/Signup';
 import { CartProvider } from './components/ContextReducer';
 import Cart from './screens/Cart';
 import MyOrders from './screens/MyOrders';
+import ForgotPassword from './screens/ForgotPassword.js';
+import ResetPassword from './screens/ResetPassword.js';
 function App() {
   return (
     <CartProvider>
@@ -23,6 +25,8 @@ function App() {
         <Route exact path = '/' element={<Home/>}></Route>
         <Route exact path = '/login' element={<Login/>}></Route>
         <Route exact path = '/signup' element={<Signup/>}></Route>
+        <Route exact path = '/forgotpassword' element={<ForgotPassword/>}></Route>
+        <Route exact path = '/resetpassword/:token' element={<ResetPassword/>}></Route>
         <Route exact path = '/cart' element={<Cart/>}></Route>
         <Route exact path = '/myorders' element={<MyOrders/>}></Route>
       </Routes>
