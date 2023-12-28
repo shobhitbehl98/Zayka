@@ -4,6 +4,7 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const cors = require('cors')
 const app = express()
+const rateLimit = require('express-rate-limit')
 const port = 5000
 const mongodb=require('./db');
 mongodb();
@@ -11,6 +12,12 @@ app.use(cors())
 app.options('*',cors())
 app.use(bodyParser.json());
 app.use(express.json())
+const limiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 20, // limit each IP to 20 requests per windowMs
+  message: 'Too many requests from this IP, please try again later.',
+});
+// app.use(limiter);
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
