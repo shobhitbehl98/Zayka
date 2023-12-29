@@ -4,7 +4,7 @@ import Badge from 'react-bootstrap/Badge'
 import { useCart } from './ContextReducer'
 
 
-export default function Navbar(props) {
+export default function Navbar({toggleMaps}) {
   const navigate = useNavigate()
   let data=useCart();
   const [cartView,setcartView] = useState(false);
@@ -14,7 +14,8 @@ export default function Navbar(props) {
     localStorage.removeItem('name');
     navigate('/login')
   }
-  
+
+
   return (
     <div >
       <nav className="navbar navbar-expand-lg navbar-dark" id='navbar'>
@@ -37,8 +38,11 @@ export default function Navbar(props) {
       :""}
         {(localStorage.getItem('location')) ?
       <li className='nav-item' style={{display:'flex'}}>
-        <img style={{transform:'scale(0.6)'}} src='location.svg' />
+        <img style={{transform:'scale(0.8)'}} src='location.svg' />
+        <div>
         <div style={{display:'flex',color:'yellow',width:'25rem',alignItems:'center'}} aria-current="page">{localStorage.getItem('location')}</div>
+        <div onClick={toggleMaps} style={{backgroundColor:'green',borderRadius:'0.25rem',width:'fit-content',height:'fit-content',padding:'0.25rem'}}>Change</div>
+        </div>
       </li>  
       :""}
 

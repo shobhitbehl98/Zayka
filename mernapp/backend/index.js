@@ -34,7 +34,7 @@ app.use((req,res,next)=>{
 app.use('/api',require('./Routes/CreateUser'))
 app.use('/api',cacheMiddleware,require('./Routes/FoodData'))
 app.use('/api',require('./Routes/UpdateFood'))
-app.use('/api',cacheMiddleware,require('./Routes/OrderData'))
+app.use('/api',require('./Routes/OrderData'))
 app.use('/api',require('./Routes/Payment'))
 app.use('/api',require('./Routes/ForgotPassword'))
 app.listen(port, () => {

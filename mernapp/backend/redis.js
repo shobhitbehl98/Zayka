@@ -1,6 +1,6 @@
 const redis = require('redis');
 const client = redis.createClient({
-  host: 'localhost',
+  host: process.env.REDIS,
   port: 6379, // default Redis port
 });
 (async () => {

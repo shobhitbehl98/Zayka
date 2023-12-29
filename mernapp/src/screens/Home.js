@@ -5,6 +5,7 @@ import Card from '../components/Card'
 import Carousal from '../components/Carousal'
 import Navbar2 from '../components/Navbar2'
 import Alert from '../components/Alert'
+import GoogleMaps from '../components/GoogleMaps'
 
 export default function Home() {
     const [Food, setFood] = useState([])
@@ -13,6 +14,15 @@ export default function Home() {
     const [isVeg, setIsVeg] = useState(false);
     const [isNVeg, setIsNVeg] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
+    const [isVisible, setisVisible] = useState(false);
+
+    const handleButtonClick = () => {
+        setisVisible(!isVisible);
+      };
+
+      const handleCloseMaps =()=>{
+        setisVisible(false);
+      }
 
     const loadData = async () => {
         try {
@@ -41,10 +51,10 @@ export default function Home() {
         <div style={{ display: 'flex', flexDirection: 'column' }}>
 
             <div style={{ position: 'fixed', zIndex: 10, width: '100%' }}>
-                <Navbar></Navbar>
+                <Navbar toggleMaps={handleButtonClick} ></Navbar>
                 <Navbar2 category={FoodCat}></Navbar2>
             </div>
-
+            <GoogleMaps isVisible={isVisible} closeMaps={handleCloseMaps}></GoogleMaps>
             <div><div id="carouselExampleFade" className="carousel slide carousel-fade" data-bs-ride="carousel" style={{ objectFit: "contain !!important" }}>
                 <div className="carousel-inner" id='carousal'>
                     <div className='carousel-caption' style={{ zIndex: "8" }}>
