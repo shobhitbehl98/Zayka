@@ -1,8 +1,8 @@
 const redis = require('redis');
 require('dotenv').config();
 const client = redis.createClient({
-  host: process.env.REDIS,
-  port: 6379, // default Redis port
+  host:'zayka2-hxg3zj.serverless.aps1.cache.amazonaws.com',
+  post:6379
 });
 (async () => {
   await client.connect();
@@ -12,7 +12,7 @@ client.on('connect', () => {
 });
 
 client.on('error', (err) => {
-  console.error(`${process.env.REDIS} Redis Error: ${err}`);
+  console.error(`Redis Error: ${err}`);
 });
 
 module.exports = client;
