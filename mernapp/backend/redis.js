@@ -1,7 +1,7 @@
 const redis = require('redis');
 require('dotenv').config();
 const client = redis.createClient({
-  host:'zayka2-hxg3zj.serverless.aps1.cache.amazonaws.com',
+  host:process.env.REDIS,
   post:6379
 });
 (async () => {

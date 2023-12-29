@@ -3,6 +3,7 @@ async function cacheMiddleware(req, res, next) {
   const key = req.originalUrl;
   try{
   const val = await redisClient.get(key);
+  console.log(val);
   if(val){
     return res.json(JSON.parse(val));
   }else{
