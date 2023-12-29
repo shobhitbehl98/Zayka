@@ -1,7 +1,7 @@
 const redis = require('redis');
 require('dotenv').config();
 const client = redis.createClient({
-  url:process.env.KV_URL
+  url: process.env.KV_URL
 });
 (async () => {
   await client.connect();
@@ -13,5 +13,8 @@ client.on('connect', () => {
 client.on('error', (err) => {
   console.error(`Redis Error: ${err}`);
 });
+
+client.on('reconnecting', () => console.log('client is reconnecting'));
+client.on('ready', () => console.log('client is ready'));
 
 module.exports = client;
