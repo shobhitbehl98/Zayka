@@ -1,5 +1,5 @@
 const redis = require('redis');
-console.log(process.env.REDIS);
+require('dotenv').config();
 const client = redis.createClient({
   host: process.env.REDIS,
   port: 6379, // default Redis port
