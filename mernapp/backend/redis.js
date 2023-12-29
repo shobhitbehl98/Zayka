@@ -12,7 +12,7 @@ client.on('connect', () => {
 });
 
 client.on('error', (err) => {
-  console.error(`Redis Error: ${err}`);
+  console.error(`${process.env.REDIS} Redis Error: ${err}`);
 });
 
 module.exports = client;
