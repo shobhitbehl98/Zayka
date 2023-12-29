@@ -1,8 +1,7 @@
 const redis = require('redis');
 require('dotenv').config();
 const client = redis.createClient({
-  host:process.env.REDIS,
-  post:6379
+  url:process.env.KV_URL
 });
 (async () => {
   await client.connect();
