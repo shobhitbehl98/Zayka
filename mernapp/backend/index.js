@@ -1,7 +1,7 @@
 const express = require('express')
 const Razorpay = require('razorpay');
 // const redisClient = require('./redis');
-const cacheMiddleware = require('./cacheMiddleware');
+// const cacheMiddleware = require('./cacheMiddleware');
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const cors = require('cors')
@@ -19,7 +19,7 @@ const limiter = rateLimit({
   max: 20, // limit each IP to 20 requests per windowMs
   message: 'Too many requests from this IP, please try again later.',
 });
-// app.use(limiter);
+app.use(limiter);
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
@@ -32,7 +32,7 @@ app.use((req,res,next)=>{
   next();
 })
 app.use('/api',require('./Routes/CreateUser'))
-app.use('/api',cacheMiddleware,require('./Routes/FoodData'))
+app.use('/api',require('./Routes/FoodData'))
 app.use('/api',require('./Routes/UpdateFood'))
 app.use('/api',require('./Routes/OrderData'))
 app.use('/api',require('./Routes/Payment'))

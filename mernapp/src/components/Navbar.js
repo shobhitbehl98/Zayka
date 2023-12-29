@@ -41,7 +41,7 @@ export default function Navbar({toggleMaps}) {
         <img style={{transform:'scale(0.8)'}} src='location.svg' />
         <div>
         <div style={{display:'flex',color:'yellow',width:'25rem',alignItems:'center'}} aria-current="page">{localStorage.getItem('location')}</div>
-        <div onClick={toggleMaps} style={{backgroundColor:'green',borderRadius:'0.25rem',width:'fit-content',height:'fit-content',padding:'0.25rem'}}>Change</div>
+        <div onClick={toggleMaps} style={{cursor:'pointer',backgroundColor:'green',borderRadius:'0.25rem',width:'fit-content',height:'fit-content',padding:'0.25rem'}}>Change</div>
         </div>
       </li>  
       :""}

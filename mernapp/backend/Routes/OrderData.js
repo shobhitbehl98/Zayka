@@ -7,7 +7,6 @@ router.post('/getmyorders', async (req, res) => {
         const orders = await Order.find({ email: req.body.email })
         const data={ data: orders }
         res.json(data);
-        redisClient.setEx(req.originalUrl, 3600, JSON.stringify(data));
     } catch (error) {
         console.error(error);
         res.send('Server Error')

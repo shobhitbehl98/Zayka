@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const Redis = require('../redis');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -27,7 +26,6 @@ router.post("/createUser", [
                 password: secPass
             })
             res.json({ success: true });
-            Redis.flushDb();    
         } catch (error) {
             console.log(error);
             res.json({ success: false });
@@ -59,7 +57,6 @@ router.post("/login", [
             }
             const authToken=jwt.sign(data,jwtSecret);
             res.json({ success: true,authToken:authToken,location:userData.location });
-            Redis.flushDb();
         } catch (error) {
             console.log(error);
             res.json({ success: false });
