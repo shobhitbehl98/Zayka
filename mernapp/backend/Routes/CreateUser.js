@@ -31,7 +31,25 @@ router.post("/createUser", [
             res.json({ success: false });
         }
     });
-
+router.post("/updateLocation",async(req,res)=>{
+    const { location, email } = req.body;
+    console.log(location,email);
+    try {
+      const result = await User.updateMany(
+        // Specify the condition to match the documents to be updated
+        { email:email },
+        // Specify the updates to be applied
+        { $set: { location } }
+      );
+      if (result.modifiedCount > 0) {
+        res.json({ message: 'Users updated successfully' });
+      } else {
+        res.status(404).json({ message: 'No users found to update' });
+      }
+   }catch(e){
+    console.log(e)
+   }
+})
 router.post("/login", [
     body('email').isEmail(),
     body('password').isLength({ min: 5 })],
