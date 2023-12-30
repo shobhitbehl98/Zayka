@@ -1,9 +1,6 @@
 const redis = require('redis');
 require('dotenv').config();
-const client = redis.createClient({
-  host:process.env.REDIS_AWS_HOST,
-  port:process.env.REDIS_AWS_PORT
-});
+const client = redis.createClient();
 
 client.on('connect', () => {
   console.log('Connected to Redis');
