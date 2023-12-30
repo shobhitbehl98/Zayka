@@ -2,8 +2,9 @@ const redis = require('redis');
 require('dotenv').config();
 const client = redis.createClient(
   {
-    host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT
+    host: process.env.REDIS_AWS_HOST,
+    port: process.env.REDIS_AWS_PORT,
+    auth: process.env.REDIS_AWS_PASSWORD
   }
 );
 
@@ -19,6 +20,9 @@ client.on('error', (err) => {
 });
 
 client.on('reconnecting', () => console.log('client is reconnecting'));
-client.on('ready', () => console.log('client is ready'));
+client.on('ready', () => {
+  console.log(client)
+  console.log('client is ready')
+});
 
 module.exports = client;
