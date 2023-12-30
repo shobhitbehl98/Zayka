@@ -11,7 +11,7 @@ router.post('/foodData',async(req,res)=>{
        console.log(!!food,!!categories);
        const data=[food,categories];
        res.send(data)
-    //    redisClient.setEx(req.originalUrl, 600, JSON.stringify(data));
+       redisClient.setEx(req.originalUrl, 600, JSON.stringify(data));
     } catch (error) {
         console.error(error);
         res.send('Server Error')

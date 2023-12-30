@@ -9,6 +9,7 @@ const app = express()
 const rateLimit = require('express-rate-limit')
 const port = 5000
 const mongodb=require('./db');
+const cacheMiddleware = require('./cacheMiddleware');
 mongodb();
 app.use(cors())
 app.options('*',cors())
@@ -32,7 +33,7 @@ app.use((req,res,next)=>{
   next();
 })
 app.use('/api',require('./Routes/CreateUser'))
-app.use('/api',require('./Routes/FoodData'))
+app.use('/api',cacheMiddleware,require('./Routes/FoodData'))
 app.use('/api',require('./Routes/UpdateFood'))
 app.use('/api',require('./Routes/OrderData'))
 app.use('/api',require('./Routes/Payment'))

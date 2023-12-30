@@ -1,17 +1,18 @@
-// const redisClient = require('./redis');
-// async function cacheMiddleware(req, res, next) {
-//   const key = req.originalUrl;
-//   try{
-//   const val = await redisClient.get(key);
-//   if(val){
-//     return res.json(JSON.parse(val));
-//   }else{
-//     console.log(`no data for ${key}`)
-//   }
-//   next();
-// }catch(e){
-//   console.log(e);
-// }
+const redisClient = require('./redis');
+async function cacheMiddleware(req, res, next) {
+  const key = req.originalUrl;
+  try{
+  const val = await redisClient.get(key);
+  console.log(val);
+  if(val){
+    return res.json(JSON.parse(val));
+  }else{
+    console.log(`no data for ${key}`)
+  }
+  next();
+}catch(e){
+  console.log(e);
+}
   // redisClient.get(key, (err, data) => {
   //   if (err) {
   //     console.error(`Redis GET Error: ${err}`);
@@ -29,4 +30,4 @@
   // });
 }
 
-// module.exports = cacheMiddleware;
+module.exports = cacheMiddleware;
